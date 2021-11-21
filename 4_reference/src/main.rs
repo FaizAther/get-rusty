@@ -41,8 +41,15 @@ fn concept_3() {
    println!("{}", r3);
 }
 
+//  Dangling
+//fn concept_4() -> &String {
+//    let s:String = String::from("Dangle");
+//    return &s;
+//}
+
 fn main() {
     concept_1();
     concept_2();
     concept_3();
+//  let _s:&String = concept_4();
 }
