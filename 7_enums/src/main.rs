@@ -35,7 +35,11 @@ fn message_run() {
     let color: MyColor = MyColor::RGB(color_rgb);
     let m_change_color_rgb: Message = Message::ChangeColor(color);
 
-    let m_change_color_grey: Message = Message::ChangeColor(MyColor::Grey(ColorGreyscale{grey:32}));
+    let m_change_color_grey: Message = Message::ChangeColor(
+        MyColor::Grey(
+            ColorGreyscale{grey: 32}
+        )
+    );
 
     println!("{:?}", m_quit);
     println!("{:?}", m_move);
