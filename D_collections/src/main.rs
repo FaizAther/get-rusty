@@ -1,3 +1,6 @@
+
+mod lib;
+
 fn main() {
     let a: [i32; 3]= [1,2,3];
     
@@ -38,6 +41,8 @@ fn main() {
         println!("{}", i);
     };
     println!("vec size:{}", vmm.len());
+
+    lib::runner();
 
     let v_err = &v[20]; // out of bound : run time error
 }
