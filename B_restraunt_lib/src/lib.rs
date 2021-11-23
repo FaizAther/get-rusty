@@ -52,6 +52,12 @@ use crate::front_house::hosting;
 
 use self::back_house::Breakfast;
 
+use rand::{Rng, CryptoRng, Error};  // Nested paths
+
+use std::io::{self, Write};
+
+use std::io::*;
+
 pub fn eat() {
     //  Absolute
     crate::front_house::hosting::add_waitlist();
@@ -72,5 +78,6 @@ pub fn eat() {
     // use keyword no need to speciy path now
     let order3 = Breakfast::summer("None");
 
+    let secret_num: i32 = rand::thread_rng().gen_range(0..100);
 }
 
