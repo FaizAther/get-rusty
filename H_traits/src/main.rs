@@ -62,6 +62,59 @@ pub fn notifyy<T: Summary>(item: &T) {
     println!("Breaking news! {}", item.summarize());
 }
 
+pub fn foo(i1: &impl Summary, i2: &impl Summary) {
+    println!("foo {}{}", i1.summarize(), i2.summarize());
+}
+
+pub fn bar<T: Summary>(i1: &T, i2: &T) {
+    println!("bar {}{}", i1.summarize(), i2.summarize());
+}
+
+use core::fmt::Display;
+use core::fmt::Debug;
+
+pub fn moo<T: Display + Clone, U: Clone + Debug>(i1: &T, i2: &U) {
+    println!("{},{:?},", i1, i2);
+}
+
+pub fn caz<T, U>(i1: &T, i2: &U)
+    where T: Display + Clone,
+          U: Clone + Debug
+{
+    println!("{},{:?},", i1, i2);
+}
+
+pub fn gen_summarizable() -> impl Summary {
+    return Post {
+        name: String::from("name"),
+        data: String::from("data"),
+    }
+}
+
+struct Pair<T> {
+    x:  T,
+    y:  T,
+}
+
+impl<T> Pair<T> {
+    pub fn new(x: T, y: T) -> Self {
+        return Self {
+            x:  x,
+            y:  y,
+        }
+    }
+}
+
+impl<T: Display + PartialOrd> Pair<T> {
+    pub fn cmp_display(&self) {
+        if self.x >= self.y {
+            println!("large x={}", self.x);
+        } else {
+            println!("large y={}", self.y);
+        }
+    }
+}
+
 fn main() {
     let article = Article {
         auth:       String::from("John"),
@@ -86,4 +139,14 @@ fn main() {
 
     notify(&article);
     notifyy(&tweet);
+
+    foo(&post, &article);
+    //bar(&post, &article); has to be same type
+    bar(&post, &post);
+
+    let summary = gen_summarizable();
+    println!("{}", summary.summarize());
+
+    let pair = Pair::new(1,2);
+    pair.cmp_display();
 }
