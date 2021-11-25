@@ -62,6 +62,10 @@ pub fn notifyy<T: Summary>(item: &T) {
     println!("Breaking news! {}", item.summarize());
 }
 
+pub fn notifyyy<T: Summary>(item: &T) {
+    println!("Breaking news! {}", item.summarize());
+}
+
 fn main() {
     let article = Article {
         auth:       String::from("John"),
