@@ -49,8 +49,53 @@ fn life3() {
     println!("{:?}", i);
 }
 
+fn first_word<'a>(s: &'a str, q:&'a str) -> &'a str {
+    if s.len() > q.len() { return s; }
+    else { return q; }
+}
+
 fn life4() {
-    
+    let word = first_word("s: &'a str", "q: &'a str");
+    println!("{}", word);
+}
+
+impl<'a> ImpExt<'a> {
+    fn return_part(&'a self, announcement: &'a str) -> &'a str {
+        println!("Attention please {}", announcement);
+        return self.part;
+    }
+}
+
+fn life5() {
+    let i = ImpExt {
+        part: "HelloWrold"
+    };
+    println!("part: {}", i.return_part("I got the part"));
+}
+
+fn life6() {
+    let s: &'static str = "I have a static life";
+    println!("{}", s);
+}
+
+use std::fmt::Display;
+
+fn longest_annon<'a, T>(
+    x: &'a str,
+    y: &'a str,
+    ann: T,
+) -> &'a str
+where
+    T: Display,
+{
+    println!("Annoncement {}", ann);
+    if x.len() > y.len() { return x; }
+    else { return y; }
+}
+
+fn life7() {
+    let check = longest_annon("x: &'a str", "y: &'a str", "ann: T");
+    println!("{}", check);
 }
 
 fn main() {
@@ -58,4 +103,7 @@ fn main() {
     life2();
     life3();
     life4();
+    life5();
+    life6();
+    life7();
 }
