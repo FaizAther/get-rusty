@@ -57,7 +57,17 @@ fn deref_4() {
     deref_show(&y); // *(*(&(Box<str>)))    ->  *(Box<str>) ->
                     //  str (as box has deref trait)
     deref_show(&z); // Just chained derefs until item achieved (auto deref)
+//  z.drop(); Not allowed explicit call
     deref_show(&((*z)[..]));
+
+    drop(z); // not our drop, std lib drop, early drop
+    println!("before end");
+}
+
+impl<T> Drop for MyBox<T> {
+    fn drop(&mut self) {
+        println!("MyBox: dropping...");
+    }
 }
 
 pub fn deref() {

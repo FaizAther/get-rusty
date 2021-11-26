@@ -19,7 +19,7 @@ enum MyList<T> {
     Nil
 }
 
-fn box_run() {
+fn box_run_1() {
     let b: Box<u32> = Box::new(5);
     println!("{}", b);
 
@@ -27,7 +27,9 @@ fn box_run() {
     let list = Box::new(MyList::<i32>::Cons(44, nil));
     let list1 = Box::new(MyList::<i32>::Cons(55, list));
     println!("{:?}", list1);
+}
 
+fn box_run_2() {
     let nill = Box::new(MyList::<MyThing<i32, &str>>::Nil);
     let thing1 = MyThing::TextData("thing1");
     let listt = Box::new(
@@ -41,6 +43,7 @@ fn box_run() {
 }
 
 fn main() {
-    box_run();
+    box_run_1();
+    box_run_2();
     crate::lib::deref();
 }
