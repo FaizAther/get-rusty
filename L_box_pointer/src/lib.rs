@@ -44,8 +44,25 @@ fn deref_3() {
     assert_eq!(5, *(y.deref()));
 }
 
+fn deref_show(s: &str) {
+    println!("{}", s);
+}
+
+fn deref_4() {
+    let x = "t1";
+    let y = Box::new("t2");
+    let z = MyBox::new(String::from("t3"));
+
+    deref_show(&x); // *(&x)                ->  *(&str)     -> str
+    deref_show(&y); // *(*(&(Box<str>)))    ->  *(Box<str>) ->
+                    //  str (as box has deref trait)
+    deref_show(&z); // Just chained derefs until item achieved (auto deref)
+    deref_show(&((*z)[..]));
+}
+
 pub fn deref() {
     deref_1();
     deref_2();
     deref_3();
+    deref_4();
 }
