@@ -63,7 +63,6 @@ fn ref_run_4() {
             "\tb={:?} a.ref_count=`{}`, b.ref_count=`{}`",
             a, Rc::strong_count(&a), Rc::strong_count(&b)
         );
-
 }
 
 pub fn list_ref_lib_runner() {
