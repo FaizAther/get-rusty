@@ -2,6 +2,8 @@
 
 use std::fmt::Display;
 
+mod lib;
+
 #[derive(Debug)]
 enum MyThing<T, U>
     where T: PartialOrd,
@@ -17,7 +19,7 @@ enum MyList<T> {
     Nil
 }
 
-fn main() {
+fn box_run() {
     let b: Box<u32> = Box::new(5);
     println!("{}", b);
 
@@ -36,4 +38,9 @@ fn main() {
         MyList::<MyThing<i32, &str>>::Cons(thing2, listt)
     );
     println!("{:?}", listtt);
+}
+
+fn main() {
+    box_run();
+    crate::lib::deref();
 }
