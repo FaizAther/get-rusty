@@ -30,7 +30,6 @@ fn ref_run_2() {
 //  println!("\t{:?}\n\t{:?}\n\t{:?}", a, b, c);
 }
 
-
 fn ref_run_3() {
     println!("ref_run_3");
 
@@ -44,8 +43,32 @@ fn ref_run_3() {
     println!("\t{:?}\n\t{:?}\n\t{:?}", a, b, c);
 }
 
+fn ref_run_4() {
+    println!("ref_run_4");
+    let a = Rc::new(MyList::Cons(5, Rc::new(MyList::Nil)));
+    println!("\ta={:?} a.ref_count=`{}`", a, Rc::strong_count(&a));
+
+    let b = Rc::new(MyList::Cons(6, a.clone()));
+    println!("\tb={:?} a.ref_count=`{}`, b.ref_count=`{}`",
+             a, Rc::strong_count(&a), Rc::strong_count(&b));
+    {
+        let c = Rc::new(MyList::Cons(7, a.clone()));
+        println!(
+            "\tb={:?} a.ref_count=`{}`, b.ref_count=`{}`, c.ref_count=`{}`",
+            a, Rc::strong_count(&a), Rc::strong_count(&b), Rc::strong_count(&c)
+        );
+        println!("\t{:?}\n\t{:?}\n\t{:?}", a, b, c);
+    }
+    println!(
+            "\tb={:?} a.ref_count=`{}`, b.ref_count=`{}`",
+            a, Rc::strong_count(&a), Rc::strong_count(&b)
+        );
+
+}
+
 pub fn list_ref_lib_runner() {
     ref_run_1();
     ref_run_2();
     ref_run_3();
+    ref_run_4();
 }
