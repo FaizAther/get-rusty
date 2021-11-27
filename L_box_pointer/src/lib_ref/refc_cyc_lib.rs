@@ -148,7 +148,35 @@ fn run3() {
         children:   RefCell::new(vec![leaf.clone()]),
     });
 
-    println!("{:?}", branch);
+    println!("\t{:?}", branch);
+}
+
+use std::rc::Weak;
+
+#[derive(Debug)]
+struct NodeP {
+    value:      u32,
+    children:   RefCell<Vec<Rc<NodeP>>>,
+    parent:     RefCell<Weak<NodeP>>,
+}
+
+fn run4() {
+    let leaf = Rc::new(NodeP {
+        value:      113,
+        children:   RefCell::new(vec![]),
+        parent:     RefCell::new(Weak::new()),
+    });
+
+    let branch = Rc::new(NodeP {
+        value:      1155,
+        children:   RefCell::new(vec![leaf.clone()]),
+        parent:     RefCell::new(Weak::new()),
+    });
+
+    *leaf.parent.borrow_mut() = Rc::downgrade(&branch);
+
+    println!("\t{:?}", leaf.parent.borrow().upgrade());
+    println!("\t{:?}", branch);
 }
 
 pub fn refc_cyc_lib_runner() {
@@ -156,4 +184,5 @@ pub fn refc_cyc_lib_runner() {
     run1();
     run2(); // this has a memory leak because of self reference
     run3();
+    run4();
 } 
