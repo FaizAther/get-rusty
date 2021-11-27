@@ -160,8 +160,6 @@ fn run3() {
         Rc::strong_count(&branch)
     );
 
-
-
     println!("\t{:?}", branch);
 }
 
@@ -180,7 +178,7 @@ fn run4() {
         children:   RefCell::new(vec![]),
         parent:     RefCell::new(Weak::new()),
     });
-    println!("\tleaf: weak={}, strong={}",
+    println!("\tleaf created\n\tleaf: weak={}, strong={}",
         Rc::weak_count(&leaf),
         Rc::strong_count(&leaf)
     );
@@ -190,7 +188,7 @@ fn run4() {
         children:   RefCell::new(vec![leaf.clone()]),
         parent:     RefCell::new(Weak::new()),
     });
-    println!("\tleaf: weak={}, strong={}",
+    println!("\tbranch created\n\tleaf: weak={}, strong={}",
         Rc::weak_count(&leaf),
         Rc::strong_count(&leaf)
     );
@@ -200,6 +198,7 @@ fn run4() {
     );
 
     *leaf.parent.borrow_mut() = Rc::downgrade(&branch);
+    println!("\tleaf.parent().borrow_mut() = Rc::downgrade(&branch)");
     println!("\tleaf: weak={}, strong={}",
         Rc::weak_count(&leaf),
         Rc::strong_count(&leaf)
