@@ -45,9 +45,24 @@ fn check3() {
     }
 }
 
+fn check4() {
+    println!("check4");
+    let v = vec![1,2,3];
+
+    //  v ownership moved inside thread closure
+    let handle = thread::spawn(move || {
+        println!("{:?}",v); 
+    });
+
+    // println!("{:?}", v); not allowed
+
+    handle.join().unwrap();
+}
+
 pub fn lib_threads_1_runner() {
     println!("lib_thread_1_runner");
     check1();
     check2();
     check3();
+    check4();
 }
